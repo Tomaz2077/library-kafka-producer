@@ -1,0 +1,9 @@
+{
+  "libraryEventId": 123,
+  "libraryEventType": "UPDATE",
+  "book": {
+    "bookId": 123,
+    "bookName": "Tomaz",
+    "bookAuthor": "Kafka Using Spring Boot"
+  }
+}
