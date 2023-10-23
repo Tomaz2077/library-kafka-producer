@@ -24,7 +24,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.HashMap;
 
-
+//SpringBootTest will bring up the whole application
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EmbeddedKafka(topics = "library-events")
 @TestPropertySource(properties = {"spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
