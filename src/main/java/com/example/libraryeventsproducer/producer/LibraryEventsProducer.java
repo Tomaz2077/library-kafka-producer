@@ -53,6 +53,20 @@ public class LibraryEventsProducer {
                 }));
     }
 
+    public SendResult<Integer, String> sendLibraryEvent2 (LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
+
+        var key = libraryEvent.libraryEventId();
+        var value = objectMapper.writeValueAsString(libraryEvent);
+
+        // 1. blocking call - get metadata about the kafka cluster. this happens only the first time or when the meta data is due to be updated
+        // 2. send message happens + return s completable future
+        var sendResult = kafkaTemplate.send(topic, key, value).get(3, TimeUnit.SECONDS);
+
+        handleSucces(key, value, sendResult);
+
+        return sendResult;
+    }
+
     public CompletableFuture<SendResult<Integer, String>> sendLibraryEvent3 (LibraryEvent libraryEvent) throws JsonProcessingException {
 
         var key = libraryEvent.libraryEventId();
@@ -76,20 +90,6 @@ public class LibraryEventsProducer {
     private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value) {
         List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
         return new ProducerRecord<>(topic,null, key, value, recordHeaders);
-    }
-
-    public SendResult<Integer, String> sendLibraryEvent2 (LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
-
-        var key = libraryEvent.libraryEventId();
-        var value = objectMapper.writeValueAsString(libraryEvent);
-
-        // 1. blocking call - get metadata about the kafka cluster. this happens only the first time or when the meta data is due to be updated
-        // 2. send message happens + return s completable future
-        var sendResult = kafkaTemplate.send(topic, key, value).get(3, TimeUnit.SECONDS);
-
-        handleSucces(key, value, sendResult);
-
-        return sendResult;
     }
 
     private void handleSucces(Integer key, String value, SendResult<Integer, String> sendResult) {

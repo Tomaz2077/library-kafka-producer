@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.when;
 
-//we dont need the whole appllication
 @WebMvcTest(LibraryEventsController.class)
 class LibraryEventsControllerUnitTest {
 

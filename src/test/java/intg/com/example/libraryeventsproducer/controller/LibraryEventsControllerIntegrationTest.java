@@ -34,13 +34,6 @@ class LibraryEventsControllerIntegrationTest {
     @Autowired
     TestRestTemplate restTemplate;
 
-    // configure embeddedKafkaBroker - done
-    // override the kafka producer bootstrap address to the embedded broker ones - done
-
-    // configure a Kafka consumer in the test case
-    // wire KafkaConsumer and embeddedKafkaBroker
-    // consume the record from the EmbeddedKafkaBroker and then assert it
-
     @Autowired
     EmbeddedKafkaBroker embeddedKafkaBroker;
 
